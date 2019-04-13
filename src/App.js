@@ -4,6 +4,10 @@ import './styles/App.sass'
 class App extends Component {
     state = {
         places: [],
+        editButtonClicked: false,
+        editedLat: '',
+        editedLng: '',
+        editedPositionIndex: null,
     };
     /**
      * Add new marker to the map
@@ -40,6 +44,55 @@ class App extends Component {
             places.splice(index, 1);
             this.setState({places});
         }
+    };
+
+    /**
+     * Edit lat and long of the marker
+     * @param index
+     * @param place
+     */
+    editMarker = (index, place) => {
+        this.setState({
+            editButtonClicked: true,
+            editedLat: place.lat,
+            editedLng: place.lng,
+            editedPositionIndex: index,
+        })
+    };
+
+    /**
+     * Save edited position after changing lat and long
+     * @param e
+     */
+    saveEditedPosition = (e) => {
+        e.preventDefault();
+        const places = [...this.state.places];
+        places[this.state.editedPositionIndex].lat = this.state.editedLat;
+        places[this.state.editedPositionIndex].lng = this.state.editedLng;
+        this.setState({
+            editButtonClicked: false,
+            places
+        })
+    };
+
+    /**
+     * Update lat and long after change their values
+     * @param e
+     */
+    updateLatLng = (e) => {
+        const name = e.target.name;
+        this.setState({
+            [name]: e.target.value,
+        });
+    };
+
+    /**
+     * Close dialog
+     */
+    closeDialog = () => {
+        this.setState({
+            editButtonClicked: false,
+        })
     };
 
     render() {
@@ -83,12 +136,59 @@ class App extends Component {
                                     City Name: <b>{place.cityName}</b>
                                 </p>
                                 <button onClick={() => this.deleteMarker(index)}>Delete</button>
+                                <button onClick={() => this.editMarker(index, place)}>Edit</button>
                             </div>
                         ))
                     }
-                </div>
-            </section>
 
+                </div>
+                {
+                    this.state.editButtonClicked &&
+                    <div className="dialog">
+                        <div className="dialog__wrapper">
+                            <div className="dialog__title">
+                                Edit Marker Position
+                            </div>
+                            <form className="dialog__form">
+                                <input type="text"
+                                       name="editedLat"
+                                       placeholder="Enter Latitude"
+                                       onInput={(e) => this.updateLatLng(e)}
+                                       value={this.state.editedLat}
+                                       className="dialog__field"
+                                />
+                                {
+                                    this.state.editedLat.length === 0 &&
+                                    <span className="dialog__error">
+                                        Kindly add the position latitude
+                                    </span>
+                                }
+                                <input
+                                    type="text"
+                                    name="editedLng"
+                                    placeholder="Enter Longitude"
+                                    onInput={(e) => this.updateLatLng(e)}
+                                    value={this.state.editedLng}
+                                    className="dialog__field"
+                                />
+                                {
+                                    this.state.editedLng.length === 0 &&
+                                    <span className="dialog__error">
+                                        Kindly add the position longitude
+                                    </span>
+                                }
+                                <div className="dialog__button-wrapper">
+                                    <button className={`dialog__button ${this.state.editedLat.length === 0 || this.state.editedLng.length === 0 && 'dialog__button--disabled'}`}
+                                            disabled={this.state.editedLat.length === 0 || this.state.editedLng.length === 0}
+                                            onClick={(e) => this.saveEditedPosition(e)}>Save</button>
+                                    <button className="dialog__button"
+                                            onClick={() => this.closeDialog()}>Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </section>
         );
     }
 }
