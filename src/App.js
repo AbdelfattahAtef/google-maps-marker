@@ -20,7 +20,7 @@ class App extends Component {
         const lat = clickEvent.latLng.lat();
         const lng = clickEvent.latLng.lng();
         let cityName = 'There is something wrong, Unknown City Name';
-        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + lng + '&key=' + 'AIzaSyC46RSzlBLMWamEoa9fqC8yT1OXjHY7mUc')
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${lat},${lng}&key=AIzaSyC46RSzlBLMWamEoa9fqC8yT1OXjHY7mUc`)
             .then((response) => response.json())
             .then((responseJson) => {
             if(responseJson.results.length !== 0){
@@ -95,12 +95,21 @@ class App extends Component {
         })
     };
 
+    /**
+     * Delete All Markers
+     */
+    deleteAllMarkers = () => {
+        this.setState({
+            places: [],
+        })
+    };
+
     render() {
         return (
             <section className="wrapper">
                 <div className="wrapper__map">
                     <Map
-                        style={{ height: '100vh', width: '50vw' }}
+                        style={{ height: '100%', width: '100%' }}
                         onClick={this.addNewMarker}
                         google={this.props.google}
                     >
@@ -117,13 +126,19 @@ class App extends Component {
                 <div className="wrapper__list">
                     {
                         this.state.places.length === 0 &&
-                        <h1 className="wrapper__no-markers">
+                        <h1 className="wrapper__map-header-title">
                             Kindly select some points in the map
                         </h1>
                     }
                     {
                         this.state.places.length > 0 &&
-                            <h1>The Markers Number is: {this.state.places.length}</h1>
+                            <div className="wrapper__map-header">
+                                <h1 className="wrapper__map-header-title">The Markers Number is: {this.state.places.length}</h1>
+                                <button className="btn delete-btn"
+                                        onClick={() => this.deleteAllMarkers()}>
+                                    Delete All Markers
+                                </button>
+                            </div>
                     }
                     {
                         this.state.places.length > 0 &&
@@ -135,8 +150,12 @@ class App extends Component {
                                 <p>
                                     City Name: <b>{place.cityName}</b>
                                 </p>
-                                <button onClick={() => this.deleteMarker(index)}>Delete</button>
-                                <button onClick={() => this.editMarker(index, place)}>Edit</button>
+                                <div className="wrapper__map-item-buttons">
+                                    <button className="btn delete-btn"
+                                            onClick={() => this.deleteMarker(index)}>Delete</button>
+                                    <button className="btn edit-btn"
+                                            onClick={() => this.editMarker(index, place)}>Edit</button>
+                                </div>
                             </div>
                         ))
                     }
@@ -178,10 +197,11 @@ class App extends Component {
                                     </span>
                                 }
                                 <div className="dialog__button-wrapper">
-                                    <button className={`dialog__button ${this.state.editedLat.length === 0 || this.state.editedLng.length === 0 && 'dialog__button--disabled'}`}
+                                    <button className={`btn default-btn
+                                    ${(this.state.editedLat.length === 0 || this.state.editedLng.length === 0) && 'disabled-btn'}`}
                                             disabled={this.state.editedLat.length === 0 || this.state.editedLng.length === 0}
                                             onClick={(e) => this.saveEditedPosition(e)}>Save</button>
-                                    <button className="dialog__button"
+                                    <button className="btn delete-btn"
                                             onClick={() => this.closeDialog()}>Cancel</button>
                                 </div>
                             </form>
