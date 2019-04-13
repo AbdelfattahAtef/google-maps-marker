@@ -62,7 +62,7 @@ class List extends Component {
                 {
                     places.length === 0 &&
                     <h1 className="wrapper__map-header-title">
-                        Kindly select some points in the map
+                        Kindly select some points on the map
                     </h1>
                 }
                 {
