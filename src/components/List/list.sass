@@ -1,21 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto')
-@import "variables"
-@import "breakpoints"
-@import "global"
+@import "../../styles/variables"
+@import "../../styles/breakpoints"
+@import "../../styles/global"
 
 .wrapper
-  display: flex
-  justify-content: space-between
-  height: 100vh
-  +breakpoint(xsmax)
-    flex-direction: column
-  &__map
-    width: 50vw
-    position: relative
-    height: 100vh
-    +breakpoint(xsmax)
-      width: 100vw
-      height: 50vh
   &__list
     width: 50vw
     height: 100vh
@@ -56,6 +44,8 @@
     display: flex
     justify-content: center
     align-items: center
+    left: 0
+    top: 0
 
     &__wrapper
       width: 300px
@@ -88,3 +78,6 @@
     &__button-wrapper
       display: flex
       justify-content: space-between
+    &__input-title
+      margin-bottom: $space-size--small
+      display: block

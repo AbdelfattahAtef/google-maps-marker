@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto')
+@import "../../styles/variables"
+@import "../../styles/breakpoints"
+@import "../../styles/global"
+
+.wrapper
+  display: flex
+  justify-content: space-between
+  height: 100vh
+  +breakpoint(xsmax)
+    flex-direction: column
+  &__map
+    width: 50vw
+    position: relative
+    height: 100vh
+    +breakpoint(xsmax)
+      width: 100vw
+      height: 50vh
