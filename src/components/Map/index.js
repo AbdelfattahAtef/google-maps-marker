@@ -78,12 +78,16 @@ class GoogleMap extends Component {
                         style={{ height: '100%', width: '100%' }}
                         onClick={this.addNewMarker}
                         google={this.props.google}
-                        zoom={15}
+                        zoom={6}
+                        initialCenter={{
+                            lat: 51.1657,
+                            lng: 10.4515
+                        }}
                     >
                         {this.state.places.length > 0 &&
-                            this.state.places.map(place => (
+                            this.state.places.map((place, index) => (
                                 <Marker
-                                    key={`${place.lat} - ${place.lng}`}
+                                    key={`${place.lat} - ${place.lng} - ${index}`}
                                     position={place}
                                     name="Test Test"/>
                             ))

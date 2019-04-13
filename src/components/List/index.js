@@ -79,7 +79,7 @@ class List extends Component {
                     places.length > 0 &&
                     places.map((place, index) => (
                         <div className="wrapper__map-item"
-                             key={`${place.lat} - ${place.lng}`}>
+                             key={`${place.lat} - ${place.lng} - ${index}`}>
                             <p>{`Latitude: ${place.lat}`}</p>
                             <p>{`Longitude: ${place.lng}`}</p>
                             <p>
