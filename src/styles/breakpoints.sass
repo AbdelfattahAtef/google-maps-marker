@@ -1,0 +1,7 @@
+@mixin breakpoint($point)
+  @if $point == xsmax
+    @media (max-width: 1023px)
+      @content
+  @else
+    @media (max-width: $point)
+      @content
