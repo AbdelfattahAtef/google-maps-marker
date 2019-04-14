@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Below you will find some information on how to perform common tasks and run the app.
 
 - `git clone git@github.com:AbdelfattahAtef/google-maps-marker.git`
-- `cd list-tweets`
+- `cd google-maps-marker`
 - run `npm install` to install the dependencies
 - run `npm start` to start the app
 - run `npm test` to run unit testing
@@ -17,9 +17,12 @@ Project Dependencies:
 - create-react-app
 - google-maps-react
 - Jest
-- Sass
-- eslint
-- prettier
+- sass-node
+- sass-loader
+- enzyme
+- enzyme-adapter-react-16
+- Eslint
+- Prettier
 
 ******************************************************************************************************
 
